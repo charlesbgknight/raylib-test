@@ -1,14 +1,16 @@
 #include "include/World.hpp"
+#include "include/Main.hpp"
 #include <print>
 #include <cmath>
-#include <numbers>
 World::World() : m_hue(0.0),
                  m_sat(1.0),
                  m_val(1.0),
                  m_pos{0, 255},           // Main::SCREEN_HEIGHT / 2};
                  m_textColor{0, 255, 255}, // HSV = 011, bright red
-                 m_elapsedFrames{0}
-{     
+                 m_elapsedFrames{0},
+                 m_tiles{}
+{
+    
 }
 
 void World::Update()
@@ -36,15 +38,6 @@ void World::drawBoxes()
 }
 void World::Draw()
 {
-    BeginDrawing();
-    ClearBackground(RAYWHITE);
     drawBoxes();
-    //T = 1s; w = 2pi/1 rad/s
-    int height = 
-    200 - 
-    (int)std::floor(
-        100 *       std::sin(
-                        std::numbers::pi * ((double)m_elapsedFrames/60)));
-    m_textColor.DrawText("cool guy lives here!", 190, height, 20);
-    EndDrawing();
+    World::texturecache_tiles[1].Draw(80, 80);
 }

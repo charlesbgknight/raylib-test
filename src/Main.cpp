@@ -1,5 +1,10 @@
 #include "include/Main.hpp"
 #include <print>
+#include <ranges>
+#include <format>
+
+std::array<raylib::Texture2D, (size_t)TileType::NUM_TILES> World::s_texturecache;
+std::array<raylib::Texture2D, 1> Entity::s_texturecache;
 
 Main::Main() 
 :           window{Main::SCREEN_WIDTH, 
@@ -8,6 +13,15 @@ Main::Main()
             world{}
 {
     window.SetTargetFPS(60);
+
+    for (int i = 0; i < (TileType::NUM_TILES; i++)
+    {
+        World::texturecache[i] = raylib::LoadImage(std::format("res/tile-{}.png", i));
+    }
+    for (int i = 0; i < EntityType::NUM_ENTITIES; i++)
+    {
+        Entity::texturecache[i] = raylib::LoadImage(std::format("res/entity-{}.png", i));
+    }
 }
 
 void Main::Update()
@@ -17,7 +31,10 @@ void Main::Update()
 
 void Main::Draw()
 {
+    BeginDrawing();
+    ClearBackground(RAYWHITE);
     world.Draw();
+    EndDrawing();
 }
 
 int main()
