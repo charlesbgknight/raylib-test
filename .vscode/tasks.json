@@ -1,0 +1,53 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "cppbuild",
+            "label": "Gaiarerria: g++ build bin/gaia",
+            "command": "/usr/bin/g++",
+            "args": [
+                "-std=c++23",
+                "-Wall",
+                "-Wextra",
+                "-Wpedantic",
+                "-Werror",
+                "-Weffc++",
+                "-Wconversion",
+                "-Werror",
+                "-pedantic-errors",
+                "-lraylib",
+                "-lGL",
+                "-lm",
+                "-lpthread",
+                "-ldl",
+                "-lrt",
+                "-lX11",
+                "-g",
+                "-I",
+                "${workspaceFolder}/include/*",
+                "${workspaceFolder}/src/*.cpp",
+                "-o",
+                "${workspaceFolder}/bin/gaia"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "panel": "dedicated", // Reuses a dedicated terminal panel
+//                "reveal": "silent", // Does not steal focus from the editor
+                "clear": true, // Clears the terminal before running the task
+//                "close": true,
+            },
+            "detail": "Build to bin/gaia with manual G++.."
+        }
+    ],
+}
