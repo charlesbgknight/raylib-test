@@ -14,13 +14,13 @@ Main::Main()
 {
     window.SetTargetFPS(60);
 
-    for (int i = 0; i < (TileType::NUM_TILES; i++)
+    for (int i = 0; i < TileType::NUM_TILES; i++)
     {
-        World::texturecache[i] = raylib::LoadImage(std::format("res/tile-{}.png", i));
+        World::s_texturecache[i] = raylib::LoadImage(std::format("res/tile-{}.png", i));
     }
     for (int i = 0; i < EntityType::NUM_ENTITIES; i++)
     {
-        Entity::texturecache[i] = raylib::LoadImage(std::format("res/entity-{}.png", i));
+        Entity::s_texturecache[i] = raylib::LoadImage(std::format("res/entity-{}.png", i));
     }
 }
 
