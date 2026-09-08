@@ -32,7 +32,7 @@ void Main::Update()
 void Main::Draw()
 {
     BeginDrawing();
-    ClearBackground(RAYWHITE);
+    ClearBackground(raylib::Color{0x00aaffff});
     world.Draw();
     EndDrawing();
 }
