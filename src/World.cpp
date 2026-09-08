@@ -24,7 +24,48 @@ void World::Update()
 }
 void World::Draw()
 {
-    ::Rectangle texSource(0,0,TILE_WIDTH_PIXELS, TILE_HEIGHT_PIXELS);
+    ::Vector2 tilePos{80,80};
+    ::Rectangle tSource{0,0,TILE_WIDTH_PIXELS, TILE_HEIGHT_PIXELS};
+    World::s_texturecache[1].Draw(tSource, tilePos);
+
+    tSource.x += TILE_WIDTH_PIXELS;
+    tilePos.x += TILE_WIDTH_PIXELS;
+    World::s_texturecache[1].Draw(tSource, tilePos);
+
+    tSource.x += TILE_WIDTH_PIXELS;
+    tilePos.x += TILE_WIDTH_PIXELS;
+    World::s_texturecache[1].Draw(tSource, tilePos);
+    
+    tSource.x = 0;
+    tSource.y += TILE_HEIGHT_PIXELS;
+    tilePos.x += TILE_WIDTH_PIXELS;
+    World::s_texturecache[1].Draw(tSource, tilePos);
+    
+    tSource.x += TILE_WIDTH_PIXELS;
+    tilePos.x += TILE_WIDTH_PIXELS;
+    World::s_texturecache[1].Draw(tSource, tilePos);
+    
+    tSource.x += TILE_WIDTH_PIXELS;
+    tilePos.x += TILE_WIDTH_PIXELS;
+    World::s_texturecache[1].Draw(tSource, tilePos);
+
+    tSource.x = 0;
+    tSource.y += TILE_HEIGHT_PIXELS;
+    tilePos.x += TILE_WIDTH_PIXELS;
+    World::s_texturecache[1].Draw(tSource, tilePos);
+    
+    tSource.x += TILE_WIDTH_PIXELS;
+    tilePos.x += TILE_WIDTH_PIXELS;
+    World::s_texturecache[1].Draw(tSource, tilePos);
+    
+    tSource.x += TILE_WIDTH_PIXELS;
+    tilePos.x += TILE_WIDTH_PIXELS;
+    World::s_texturecache[1].Draw(tSource, tilePos);
+}
+
+/*
+
+::Rectangle texSource(0,0,TILE_WIDTH_PIXELS, TILE_HEIGHT_PIXELS);
     for (int r = 0; r < WORLD_HEIGHT; r++) {
         for (int c = 0; c < WORLD_WIDTH; c++) {
             texSource.x = texSource.y = 0;
@@ -50,6 +91,4 @@ void World::Draw()
 
         }
     }
-    World::s_texturecache[1].Draw(80, 80);
-}
-
+*/
