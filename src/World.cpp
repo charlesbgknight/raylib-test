@@ -19,76 +19,35 @@ World::World() : m_tiles{}
 
 void World::Update()
 {
-    // float scroll = raylib::Mouse::GetWheelMove();
-    // if (scroll != 0) raylib::Camera2D::SetZoom
 }
 void World::Draw()
-{
-    ::Vector2 tilePos{80,80};
-    ::Rectangle tSource{0,0,TILE_WIDTH_PIXELS, TILE_HEIGHT_PIXELS};
-    World::s_texturecache[1].Draw(tSource, tilePos);
-
-    tSource.x += TILE_WIDTH_PIXELS;
-    tilePos.x += TILE_WIDTH_PIXELS;
-    World::s_texturecache[1].Draw(tSource, tilePos);
-
-    tSource.x += TILE_WIDTH_PIXELS;
-    tilePos.x += TILE_WIDTH_PIXELS;
-    World::s_texturecache[1].Draw(tSource, tilePos);
-    
-    tSource.x = 0;
-    tSource.y += TILE_HEIGHT_PIXELS;
-    tilePos.x += TILE_WIDTH_PIXELS;
-    World::s_texturecache[1].Draw(tSource, tilePos);
-    
-    tSource.x += TILE_WIDTH_PIXELS;
-    tilePos.x += TILE_WIDTH_PIXELS;
-    World::s_texturecache[1].Draw(tSource, tilePos);
-    
-    tSource.x += TILE_WIDTH_PIXELS;
-    tilePos.x += TILE_WIDTH_PIXELS;
-    World::s_texturecache[1].Draw(tSource, tilePos);
-
-    tSource.x = 0;
-    tSource.y += TILE_HEIGHT_PIXELS;
-    tilePos.x += TILE_WIDTH_PIXELS;
-    World::s_texturecache[1].Draw(tSource, tilePos);
-    
-    tSource.x += TILE_WIDTH_PIXELS;
-    tilePos.x += TILE_WIDTH_PIXELS;
-    World::s_texturecache[1].Draw(tSource, tilePos);
-    
-    tSource.x += TILE_WIDTH_PIXELS;
-    tilePos.x += TILE_WIDTH_PIXELS;
-    World::s_texturecache[1].Draw(tSource, tilePos);
-}
-
-/*
-
-::Rectangle texSource(0,0,TILE_WIDTH_PIXELS, TILE_HEIGHT_PIXELS);
-    for (int r = 0; r < WORLD_HEIGHT; r++) {
-        for (int c = 0; c < WORLD_WIDTH; c++) {
-            texSource.x = texSource.y = 0;
-// If same tile one above, shift sourcerect down. If same tile one left, shift sourcerect right
+{ 
+    for (int r = 0; r < WORLD_HEIGHT; r++)
+    {
+        for (int c = 0; c < WORLD_WIDTH; c++)
+        {
+            ::Vector2 tilePos{c * TILE_WIDTH_PIXELS, r * TILE_HEIGHT_PIXELS};
+            ::Rectangle tSource{0,0,TILE_WIDTH_PIXELS, TILE_HEIGHT_PIXELS};
+            // If same tile one above, shift sourcerect down.
+            // If same tile one left, shift sourcerect right
             Tile t = m_tiles[c][r];
-            //TODO uncomment lol     if(t.id == TileType::AIR) continue;
-            ::Texture2D tex = s_texturecache[t.id];
-            texSource.y += t.frame * TILE_HEIGHT_PIXELS * 3;
-            ::Rectangle ts_scaled = {texSource.x, texSource.y, texSource.width * 4, texSource.height * 4};
+            // TODO uncomment lol     if(t.id == TileType::AIR) continue;
+            tSource.y += t.frame * TILE_HEIGHT_PIXELS * 3;
             // Cohere lower surface if same blocks below
-            if (r+1 < WORLD_HEIGHT && m_tiles[c][r + 1].id == t.id)
-                texSource.y -= TILE_HEIGHT_PIXELS;
+            if (r + 1 < WORLD_HEIGHT && m_tiles[c][r + 1].id == t.id)
+            tSource.y -= TILE_HEIGHT_PIXELS;
             // Cohere upper  surface if same blocks above
             if (r > 0 && m_tiles[c][r - 1].id == t.id)
-                texSource.y += TILE_HEIGHT_PIXELS;
-            //Cohere left surface if same blocks right
-            if (c+1 < WORLD_WIDTH && m_tiles[c+1][r].id == t.id)
-                texSource.x -= TILE_WIDTH_PIXELS;
-            //Cohere right surface if same blocks left
+            tSource.y += TILE_HEIGHT_PIXELS;
+            // Cohere left surface if same blocks right
+            if (c + 1 < WORLD_WIDTH && m_tiles[c + 1][r].id == t.id)
+            tSource.x -= TILE_WIDTH_PIXELS;
+            // Cohere right surface if same blocks left
             if (c > 0 && m_tiles[c - 1][r].id == t.id)
-                texSource.x -= TILE_WIDTH_PIXELS;
-            //man i'd love a `for ( x,y in [{0,1},...]) ` type of thing
-
+            tSource.x -= TILE_WIDTH_PIXELS;
+            // man i'd love a `for ( x,y in [{0,1},...]) ` type of thing
+            
+            World::s_texturecache[t.id].Draw(tSource, tilePos);
         }
     }
-*/
+}
