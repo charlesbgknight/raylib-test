@@ -16,7 +16,7 @@ target := $(buildDir)/$(executable)
 sources := $(call rwildcard,src/,*.cpp)
 objects := $(patsubst src/%, $(buildDir)/%, $(patsubst %.cpp, %.o, $(sources)))
 depends := $(patsubst %.o, %.d, $(objects))
-compileFlags := -std=c++23 -I include -g
+compileFlags := -std=c++23 -I include -g -pg
 linkFlags = -L lib/$(platform) -l raylib
 
 # Check for Windows
@@ -57,8 +57,8 @@ endif
 # Lists phony targets for Makefile
 .PHONY: all setup submodules execute clean
 
-# Default target, compiles, executes and cleans
-all: $(target) execute clean
+# Default target, compiles &  executes
+all: $(target) execute
 
 # Sets up the project for compiling, generates includes and libs
 setup: include lib
