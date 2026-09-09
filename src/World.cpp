@@ -6,7 +6,7 @@ using namespace raylib;
 //static constexpr std::array<Util::Coord, 4> CARDINAL_DIRS{{0,1}, {1,0}, {0,-1}, {-1,0}}; 
 World::World() : m_tiles{}
 {
-    //Initialize m_tiles to empty (AIR) blocks 
+    //m_tiles: 2D std::array. Indexed [x][y], [0][0] is the top-left corner.
     for (int y = 0; y < World::WORLD_HEIGHT; ++y)
     {
         for (int x = 0; x < World::WORLD_WIDTH; ++x)
@@ -21,7 +21,8 @@ World::World() : m_tiles{}
 // 
 //         }
 //     }
-    int x = 15, y = 10;
+    //Generate testing diamond 
+    int x = 16, y = 16;
     int w = 16, h = 16;
     for (int a = - w; a < w; a++) {
         for (int b = -h; b < h; b++) {
@@ -61,36 +62,35 @@ void World::Draw()
     {
         for (int c = 0; c < WORLD_WIDTH; c++)
         {
-            //Initialize texture source to middle tile, located at 1,1.
-            ::Rectangle texSource(TILE_WIDTH_PIXELS, TILE_HEIGHT_PIXELS,
-                                  TILE_WIDTH_PIXELS, TILE_HEIGHT_PIXELS);
-            // If same tile one above, shift sourcerect down. If same tile one left, shift sourcerect right
+            ::Vector2 tilePos{c * TILE_WIDTH_PIXELS, r * TILE_HEIGHT_PIXELS};
+            ::Rectangle tSource{0,0,TILE_WIDTH_PIXELS, TILE_HEIGHT_PIXELS};
+
+            // If same tile in a direction from this tile, shift sourcerect
+            //  by the opposite direction.
             Tile t = m_tiles[c][r];
+            if(t.id == TileType::AIR) continue;
             
-            raylib::Vector2 tilePos{c * TILE_WIDTH_PIXELS, r * TILE_HEIGHT_PIXELS};
-            World::s_texturecache[t.id].Draw(texSource, tilePos);
+            //Rabdom frames to prevent repetetive pattern (not yet in textures)
+            //tSource.y += t.frame * TILE_HEIGHT_PIXELS * 3;
+            
+            // Cohere lower surface if same blocks below
+            if (r + 1 < WORLD_HEIGHT && m_tiles[c][r + 1].id == t.id)
+            tSource.y -= TILE_HEIGHT_PIXELS;
+            
+            // Cohere upper  surface if same blocks above
+            if (r > 0 && m_tiles[c][r - 1].id == t.id)
+            tSource.y += TILE_HEIGHT_PIXELS;
+            
+            // Cohere left surface if same blocks right
+            if (c + 1 < WORLD_WIDTH && m_tiles[c + 1][r].id == t.id)
+            tSource.x -= TILE_WIDTH_PIXELS;
+            
+            // Cohere right surface if same blocks left
+            if (c > 0 && m_tiles[c - 1][r].id == t.id)
+            tSource.x -= TILE_WIDTH_PIXELS;
+            
+            World::s_texturecache[t.id].Draw(tSource, tilePos);
         }
     }
 }
 
-/*
-//TODO uncomment lol     if(t.id == TileType::AIR) continue;
-            ::Texture2D tex = s_texturecache[t.id];
-            texSource.y += t.frame * TILE_HEIGHT_PIXELS * 3;
-            // Cohere lower surface if same blocks below
-            if (r+1 < WORLD_HEIGHT && m_tiles[c][r + 1].id == t.id)
-            texSource.y -= TILE_HEIGHT_PIXELS;
-            // Cohere upper  surface if same blocks above
-            if (r > 0 && m_tiles[c][r - 1].id == t.id)
-            texSource.y += TILE_HEIGHT_PIXELS;
-            //Cohere left surface if same blocks right
-            if (c+1 < WORLD_WIDTH && m_tiles[c+1][r].id == t.id)
-            texSource.x -= TILE_WIDTH_PIXELS;
-            //Cohere right surface if same blocks left
-            if (c > 0 && m_tiles[c - 1][r].id == t.id)
-            texSource.x += TILE_WIDTH_PIXELS;
-            //man i'd love a `for ( x,y in [{0,1},...]) ` type of thing
-
-
-
-*/

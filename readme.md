@@ -20,6 +20,8 @@ Foundations of structure & engine, gradually introduce player mechanics and NPC 
 World components will be extracted into disparate generation processes to allow
 composed design & parameter adjustment.  
 - Perlin noise for natural patterns?
+
 ### NPCs
 - tile collosion system first (quadtree collision? per-vertex velocity iteration?)
 - basic test AIs before player interaction
+

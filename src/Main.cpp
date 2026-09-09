@@ -5,8 +5,7 @@
 
 std::array<raylib::Texture2D, (size_t)TileType::NUM_TILES> World::s_texturecache;
 std::array<raylib::Texture2D, 1> Entity::s_texturecache;
-double zoom = 1.0;
-raylib::Camera2D camera{};
+raylib::Camera2D cam{};
 Main::Main() 
 :           window{Main::SCREEN_WIDTH, 
                     Main::SCREEN_HEIGHT,
@@ -28,21 +27,17 @@ Main::Main()
 void Main::Update()
 {
     world.Update();
-    float scroll = raylib::Mouse::GetWheelMove();
-    if (scroll != 0) {
-        std::println("Zoomed to {}%", zoom * 100);
-        zoom = zoom + scroll / 20.0;
-        camera.SetZoom(zoom);
-    }
+    //GetWheelMove gives a +1 or -1 if wheel scrolled, 
+        cam.SetZoom(cam.GetZoom() + (raylib::Mouse::GetWheelMove() / 20.0));
 }
 
 void Main::Draw()
 {
     BeginDrawing();
     ClearBackground(raylib::Color{0x00aaffff});
-    BeginMode2D(camera);
-
+    cam.BeginMode();
     world.Draw();
+    cam.EndMode();
     EndDrawing();
 }
 
