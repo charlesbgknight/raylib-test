@@ -63,15 +63,18 @@ void World::Draw()
         for (int c = 0; c < WORLD_WIDTH; c++)
         {
             ::Vector2 tilePos{c * TILE_WIDTH_PIXELS, r * TILE_HEIGHT_PIXELS};
-            ::Rectangle tSource{0,0,TILE_WIDTH_PIXELS, TILE_HEIGHT_PIXELS};
-
-            // If same tile in a direction from this tile, shift sourcerect
-            //  by the opposite direction.
+            //Neutral texture is centre-block (fully surrounded )
+            ::Rectangle tSource{TILE_WIDTH_PIXELS, TILE_HEIGHT_PIXELS,
+                                TILE_WIDTH_PIXELS, TILE_HEIGHT_PIXELS};
             Tile t = m_tiles[c][r];
-            if(t.id == TileType::AIR) continue;
             
             //Rabdom frames to prevent repetetive pattern (not yet in textures)
             //tSource.y += t.frame * TILE_HEIGHT_PIXELS * 3;
+
+            // If same tile in a direction from this tile, shift sourcerect
+            //  by the opposite direction.
+            if(t.id == TileType::AIR) continue;
+            
             
             // Cohere lower surface if same blocks below
             if (r + 1 < WORLD_HEIGHT && m_tiles[c][r + 1].id == t.id)
@@ -87,7 +90,7 @@ void World::Draw()
             
             // Cohere right surface if same blocks left
             if (c > 0 && m_tiles[c - 1][r].id == t.id)
-            tSource.x -= TILE_WIDTH_PIXELS;
+            tSource.x += TILE_WIDTH_PIXELS;
             
             World::s_texturecache[t.id].Draw(tSource, tilePos);
         }

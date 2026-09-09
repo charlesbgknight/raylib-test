@@ -20,4 +20,7 @@ public:
     Main();
 private:
     std::array<Entity, ENTITY_CAP> entities;
+    float goalZoom;
+    raylib::Camera2D cam;
+    raylib::Vector2 cameraGoal;
     };
